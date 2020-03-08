@@ -1,0 +1,118 @@
+.invoice-text {
+  font-size: 50px;
+}
+.invoice-body {
+  margin-top: 60px;
+  font-family: "Josefin Sans", sans-serif;
+}
+.norek {
+  background-color: rgb(224, 224, 224);
+  padding: 10px;
+  border: solid transparent;
+  border-radius: 5px;
+}
+.norek-body {
+  font-size: 18px;
+}
+.alertImage {
+  margin: 20px;
+  width: 60px;
+  height: 60px;
+}
+.qrcodes {
+  float: right;
+  width: 90px;
+  height: 90px;
+}
+.invoice-text-train {
+  font-size: 40px;
+  font-weight: bold;
+}
+.invoice-text-date {
+  font-size: 20px;
+  opacity: 0.8;
+}
+.invoice-text-train-name {
+  font-size: 25px;
+  font-weight: bold;
+}
+.invoice-text-train-type {
+  font-size: 15px;
+}
+.invoice-text-bold {
+  font-size: 20px;
+  font-weight: bold;
+}
+.invoice-text-x {
+  font-size: 15px;
+  opacity: 0.7;
+}
+.invoice-qrcode-header {
+  width: 100%;
+  background-color: rgb(224, 224, 224);
+  padding: 10px;
+}
+.invoice-qrcode-body {
+  background-color: rgb(241, 241, 241);
+  padding: 10px;
+}
+.invoice-costumer {
+  margin-top: 20px;
+  border: solid 1px;
+  border-radius: 5px;
+  border-color: rgb(224, 224, 224);
+  font-size: 16px;
+}
+.invoice-costumer-detail {
+  margin-top: 20px;
+}
+.invoice-costumer-detailx {
+  border-top: solid 1px;
+  border-color: rgb(224, 224, 224);
+}
+.invoice-pricing {
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.invoice-pricing-details {
+  font-size: 16px;
+  border: solid 1px;
+  border-radius: 5px;
+}
+.invoice-pricing-total {
+  border-top: solid 1px;
+}
+.invoice-upload {
+  margin-top: 20px;
+}
+.invoice-camera-icon {
+  margin-top: 35px;
+  margin-bottom: 35px;
+  width: 40;
+  height: 100px;
+  filter: invert();
+}
+.invoice-choose-file{
+  margin-top: 20pxx;
+  margin-bottom: 50px;
+}
+.invoice-pricing-row {
+  margin-top: 5px;
+}
+.invoice-pricing-total-text {
+  margin-top: 10px;
+  font-weight: bold;
+}
+.invoice-upload-text {
+  text-align: center;
+}
+.invoice-logo-container {
+  justify-content: left;
+  text-align: left;
+}
+.invoice-logo {
+  width: 100px;
+  height: 55px;
+  margin-left: -20px;
+}

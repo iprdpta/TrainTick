@@ -1,0 +1,30 @@
+.modalBody {
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.modalButton {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border: solid transparent;
+  border-radius: 5px;
+  color: white;
+  background-color: #3066be;
+}
+.forms {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(240, 240, 240);
+  border: solid transparent;
+}
+.forms:focus {
+  border: solid transparent;
+  background-color: white;
+}
