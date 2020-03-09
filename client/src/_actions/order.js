@@ -1,5 +1,16 @@
 import { API, setHeaderAuth } from "../config/api";
-import { ORDER_DETAIL, UPLOAD_PROOF } from "../config/constants";
+import { ORDER_DETAIL, UPLOAD_PROOF, ORDER_TICKET } from "../config/constants";
+
+export const orderTicket = order => {
+  return {
+    type: ORDER_TICKET,
+    payload: async () => {
+      const res = await API.post(`/order`, order);
+      const { data } = res.data;
+      return data;
+    }
+  };
+};
 
 export const getOrderDetail = id => {
   return {

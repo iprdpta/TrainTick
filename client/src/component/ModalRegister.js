@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, Modal, Form } from "react-bootstrap";
+import { Container, Button, Modal, Form, Alert, Image } from "react-bootstrap";
 import { registerUser } from "../_actions/auth";
 import { connect } from "react-redux";
+import quit from "../assets/quit.svg";
 
 const ModalLogin = props => {
+  const { auth } = props;
   const [showModal, setModal] = useState(false);
 
   const [name, setName] = useState(null);
@@ -15,11 +17,18 @@ const ModalLogin = props => {
   const [phone, setPhone] = useState(null);
   const [address, setAddress] = useState(null);
 
-  useEffect(() => {
-    props.registerUser();
-  }, []);
-
-  const registerSubmit = e => {
+  const registerSubmit = async (
+    e,
+    id_card,
+    name,
+    username,
+    email,
+    password,
+    gender,
+    phone,
+    address
+  ) => {
+    e.preventDefault();
     const register = {
       id_card,
       name,
@@ -30,7 +39,13 @@ const ModalLogin = props => {
       phone,
       address
     };
-    props.registerUser(register);
+    const reg = await props.registerUser(register);
+    if (
+      !reg.value.message === "Email or Username Already Registered" &&
+      reg.value.message === "fail"
+    ) {
+      window.location.reload(false);
+    }
   };
 
   return (
@@ -39,10 +54,29 @@ const ModalLogin = props => {
         Register
       </Button>
       <Modal size="sm" show={showModal} onHide={() => setModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Register</Modal.Title>
+        <Modal.Header bsPrefix>
+          <Container>
+            <Button
+              bsPrefix="invoice-modal-quitbutton"
+              onClick={() => setModal(false)}
+            >
+              <Image className="invoice-modal-quiticon" src={quit} />
+            </Button>
+          </Container>
+          <Container fluid className="buy-header-title">
+            <label className="buy-header-title">REGISTER</label>
+          </Container>
         </Modal.Header>
         <Container bsPrefix="modalBody">
+          {auth.auth.message === "Email or Username Already Registered" ? (
+            <Alert variant="danger">Email or Username Already Registered</Alert>
+          ) : null}
+          {auth.auth.message === "fail" ? (
+            <Alert variant="danger">Please Fill all Empty Forms</Alert>
+          ) : null}
+          {auth.auth.message === "Register Success" ? (
+            <Alert variant="success">Register Success</Alert>
+          ) : null}
           <Form>
             <Form.Group>
               <Form.Label>Name</Form.Label>
@@ -91,7 +125,6 @@ const ModalLogin = props => {
             <Form.Group controlId="formGridState">
               <Form.Label>Gender</Form.Label>
               <Form.Control
-                bsPrefix="forms"
                 onChange={e => setGender(e.target.value)}
                 name="gender"
                 as="select"
@@ -119,7 +152,19 @@ const ModalLogin = props => {
             <Button
               bsPrefix="modalButton"
               type="submit"
-              onClick={() => registerSubmit()}
+              onClick={e =>
+                registerSubmit(
+                  e,
+                  id_card,
+                  name,
+                  username,
+                  email,
+                  password,
+                  gender,
+                  phone,
+                  address
+                )
+              }
             >
               Register
             </Button>

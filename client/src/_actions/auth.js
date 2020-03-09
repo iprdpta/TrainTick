@@ -1,4 +1,4 @@
-import { API } from "../config/api";
+import { API, setHeaderAuth } from "../config/api";
 import { REGISTER_USER, USER_LOGIN } from "../config/constants";
 
 export const postLogin = login => {
@@ -6,8 +6,10 @@ export const postLogin = login => {
     type: USER_LOGIN,
     payload: async () => {
       const res = await API.post("/login", login);
-      const data = res.data.token;
-      const token = localStorage.setItem("token", data);
+      const data = res.data;
+      localStorage.setItem("token", data.token);
+      const token = localStorage.getItem('token')
+      setHeaderAuth(token);
       return data;
     }
   };

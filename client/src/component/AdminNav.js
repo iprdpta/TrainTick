@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Container, Image, Nav, NavDropdown, Form, Modal, Button } from "react-bootstrap";
+import {
+  Container,
+  Image,
+  Nav,
+  NavDropdown,
+  Form,
+  Modal,
+  Button
+} from "react-bootstrap";
 import { connect } from "react-redux";
 import user from "../assets/user.svg";
+import { Link } from "react-router-dom";
 
 const Admin = props => {
   const [showModal, setModal] = useState(false);
@@ -16,6 +25,10 @@ const Admin = props => {
   const [price, setPrice] = useState(null);
   const [qty, setQty] = useState(null);
 
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload(false);
+  };
 
   const { loading, error, logedIn } = props.auth;
   return (
@@ -27,7 +40,9 @@ const Admin = props => {
             Add Ticket
           </NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item>Log Out</NavDropdown.Item>
+          <NavDropdown.Item onClick={() => handleLogout()}>
+            <Link to="/">Log Out</Link>
+          </NavDropdown.Item>
         </NavDropdown>
       </Nav>
 
@@ -73,8 +88,7 @@ const Admin = props => {
                 bsPrefix="forms"
                 onChange={e => setStartTime(e.target.value)}
                 type="time"
-              >
-              </Form.Control>
+              ></Form.Control>
             </Form.Group>
             <Form.Group>
               <Form.Label>Destination</Form.Label>
@@ -105,10 +119,7 @@ const Admin = props => {
                 onChange={e => setQty(e.target.value)}
               />
             </Form.Group>
-            <Button
-              bsPrefix="modalButton"
-              type="submit"
-            >
+            <Button bsPrefix="modalButton" type="submit">
               ADD TICKET
             </Button>
           </Form>

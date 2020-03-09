@@ -13,3 +13,4 @@ export const MYTICKET_LIST = "MYTICKET_LIST";
 
 export const ORDER_DETAIL = "ORDER_DETAIL";
 export const UPLOAD_PROOF = "UPLOAD_PROOF";
+export const ORDER_TICKET = "ORDER_TICKET";

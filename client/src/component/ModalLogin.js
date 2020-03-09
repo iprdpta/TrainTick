@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, Modal, Form } from "react-bootstrap";
+import { Container, Button, Modal, Form, Alert, Image } from "react-bootstrap";
 import { postLogin } from "../_actions/auth";
 import { connect } from "react-redux";
+import quit from "../assets/quit.svg";
 
 const ModalLogin = props => {
+  const { auth, postLogin } = props;
   const [showModal, setModal] = useState(false);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
-  useEffect(() => {
-    props.postLogin();
-  }, []);
-
-  const loginSubmit = e => {
-    console.log(username, password, "asdsadasdasdasd aaa aaaa a aa");
+  const loginSubmit = async (e, username, password) => {
+    e.preventDefault();
     const login = { username, password };
-    props.postLogin(login);
+    const log = await postLogin(login);
+    console.log(username, password, auth.auth.message, "axxxx");
+    if (log.value.message === "Invalid Login") {
+      return null;
+    } else {
+      window.location.reload(false);
+    }
   };
-  const { error, loading } = props.auth;
 
   return (
     <>
@@ -34,10 +37,27 @@ const ModalLogin = props => {
         show={showModal}
         onHide={() => setModal(false)}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
+        <Modal.Header bsPrefix>
+          <Container>
+            <Button
+              bsPrefix="invoice-modal-quitbutton"
+              onClick={() => setModal(false)}
+            >
+              <Image className="invoice-modal-quiticon" src={quit} />
+            </Button>
+          </Container>
+          <Container fluid className="buy-header-title">
+            <label className="buy-header-title">LOGIN</label>
+          </Container>
         </Modal.Header>
         <Container bsPrefix="modalBody">
+          {auth.auth.message === "Invalid Login" ? (
+            <Alert variant="danger">Password or email wrong</Alert>
+          ) : null}
+          {auth.auth.message === "Login Success" ? (
+            <Alert variant="success">Login Success</Alert>
+          ) : null}
+
           <Form>
             <Form.Group>
               <Form.Label>Username</Form.Label>
@@ -54,8 +74,11 @@ const ModalLogin = props => {
                 onChange={e => setPassword(e.target.value)}
               />
             </Form.Group>
-            <Button bsPrefix="modalButton" type="submit" onClick={() => loginSubmit()}>
-              
+            <Button
+              bsPrefix="modalButton"
+              type="submit"
+              onClick={e => loginSubmit(e, username, password)}
+            >
               LOGIN
             </Button>
           </Form>

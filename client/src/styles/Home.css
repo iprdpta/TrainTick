@@ -218,12 +218,34 @@
   color: white;
   border: solid transparent;
 }
+.home-qtyx {
+  align-items: left;
+  text-align: left;
+  font-size: 25px;
+}
 .home-qty {
   align-items: center;
   text-align: center;
   font-size: 25px;
 }
-.user-name{
+.user-name {
   font-size: 20px;
   text-align: right;
+}
+.buy-header-title {
+  text-align: left;
+  font-size: 25px;
+  font-weight: bold;
+}
+.buy-header-title {
+  margin-left: 10px;
+  margin-top: 7px;
+  margin-bottom: 0px;
+}
+.home-price {
+  background-color: green;
+  color: white;
+  align-items: center;
+  text-align: center;
+  font-size: 20px;
 }

@@ -16,10 +16,10 @@ exports.login = async (req, res) => {
     const result = await bcrypt.compare(password, user.password);
     if (user && result) {
       const token = jwt.sign({ user_id: user.id }, process.env.SECRET_KEY);
-      res.send({ message: "Login Success", username, token });
+      res.json({ message: "Login Success", username, token });
     } else {
       const message = "Invalid Login";
-      res.status(401).json({ message: message });
+      res.json({ message: message });
     }
   } catch (err) {
     console.log(err);
@@ -38,38 +38,54 @@ exports.register = async (req, res) => {
     address
   } = req.body;
   const salt = await bcrypt.genSalt(saltRounds);
-  const hash = await bcrypt.hash(password, salt);
   const user = "User";
 
   try {
-    const check = await User.findOne({
-      where: { [sequelize.Op.or]: { email, username } }
-    });
-    if (check) {
-      res.status(401).json({
+    if (
+      id_card === null ||
+      password === null ||
+      email === null ||
+      name === null ||
+      username === null ||
+      gender === null ||
+      phone === null ||
+      address === null
+    ) {
+      res.json({
         status: false,
-        message: "Email or Username Already Registered"
+        message: "fail"
       });
     } else {
-      const regUser = await User.create({
-        id_card,
-        name,
-        username,
-        email,
-        password: hash,
-        gender,
-        phone,
-        address,
-        level: user
+      const check = await User.findOne({
+        where: { [sequelize.Op.or]: { email, username } }
       });
-
-      if (regUser) {
-        const token = jwt.sign({ user_id: regUser.id }, process.env.SECRET_KEY);
-        res
-          .status(200)
-          .send({ email, token, status: true, message: "Register Success" });
+      if (check) {
+        res.json({
+          status: false,
+          message: "Email or Username Already Registered"
+        });
       } else {
-        res.status(401).json({ status: false, message: "Invalid Register" });
+        const hash = await bcrypt.hash(password, salt);
+        const regUser = await User.create({
+          id_card,
+          name,
+          username,
+          email,
+          password: hash,
+          gender,
+          phone,
+          address,
+          level: user
+        });
+        if (regUser) {
+          const token = jwt.sign(
+            { user_id: regUser.id },
+            process.env.SECRET_KEY
+          );
+          res.send({ email, token, status: true, message: "Register Success" });
+        } else {
+          res.json({ status: false, message: "Invalid Register" });
+        }
       }
     }
   } catch (err) {

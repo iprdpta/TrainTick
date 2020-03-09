@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Image,
-  Form,
-  Button,
-  Row,
-  Col,
-  Modal
-} from "react-bootstrap";
-import { getTicket } from "../_actions/ticket";
+import React, { useState } from "react";
+import { Container, Image, Button, Row, Col, Modal } from "react-bootstrap";
+import { orderTicket } from "../_actions/order";
 import { connect } from "react-redux";
 import market from "../assets/market.svg";
 import qrcodes from "../assets/frame.png";
 import arrow from "../assets/oo.jpg";
 import quit from "../assets/quit.svg";
+import { Link } from "react-router-dom";
 
-const ModalBuy = ({ data, getTicket }) => {
+const ModalBuy = ({ data, orderTicket }) => {
+  const { id, price } = data;
   const [showModal, setModal] = useState(false);
+  const [showModalx, setModalx] = useState(false);
   const [qty, setQty] = useState(1);
+  const [total, setTotal] = useState(qty * price);
 
-  useEffect(() => {
-    getTicket();
-  }, []);
+  const handleOrder = (id, qty) => {
+    const ticket_id = id;
+    const order = { qty, ticket_id };
+    orderTicket(order);
+    setModal(false);
+    setModalx(true);
+  };
 
   const dayName = item => {
     const days = [
@@ -37,12 +37,29 @@ const ModalBuy = ({ data, getTicket }) => {
     return days[day.getDay()];
   };
 
-  return (
+  const handleInc = () => {
+    setQty(qty + 1);
+    // if (setQty) {
+    //   setTotal(price * qty);
+    // }
+  };
+
+  const handleDec = () => {
+    setQty(qty > 0 ? qty - 1 : 0);
+    // setTotal(price * qty);
+  };
+
+  return data && data.traintype ? (
     <>
       <Button bsPrefix="button-market" onClick={() => setModal(true)}>
         <Image className="market-icon" src={market} />
       </Button>
-      <Modal className="fontx" show={showModal} onHide={() => setModal(false)}>
+      <Modal
+        size="lg"
+        className="fontx"
+        show={showModal}
+        onHide={() => setModal(false)}
+      >
         <Modal.Header bsPrefix>
           <Container>
             <Button
@@ -51,6 +68,9 @@ const ModalBuy = ({ data, getTicket }) => {
             >
               <Image className="invoice-modal-quiticon" src={quit} />
             </Button>
+          </Container>
+          <Container fluid className="buy-header-title">
+            <label className="buy-header-title">BOOK TICKET</label>
           </Container>
         </Modal.Header>
         <Modal.Body>
@@ -75,9 +95,13 @@ const ModalBuy = ({ data, getTicket }) => {
             </Row>
             <Container className="invoice-qrcode-body">
               <Container>
-                <label className="invoice-text-train-name">Argo Wilis</label>
+                <label className="invoice-text-train-name">
+                  {data.train_name}
+                </label>
                 <br />
-                <label className="invoice-text-train-type">Eksekutif (H)</label>
+                <label className="invoice-text-train-type">
+                  {data.traintype.name}
+                </label>
               </Container>
               <Row>
                 <Col lg={1}>
@@ -109,6 +133,10 @@ const ModalBuy = ({ data, getTicket }) => {
                     {data.destination_station}
                   </label>
                 </Col>
+
+                <Container fluid className="home-price">
+                  <label>Price : Rp{data.price},-</label>
+                </Container>
               </Row>
             </Container>
           </Container>
@@ -117,45 +145,64 @@ const ModalBuy = ({ data, getTicket }) => {
             <Col lg={7}>
               <Container fluid>
                 <Row>
-                  <Col xs={3}>
-                    <Container fluid className="home-qty">
-                      <label>Quantity</label>
-                    </Container>
-                  </Col>
-                  <Col xs={3}>
+                  <Container fluid className="home-qtyx">
+                    <label>Quantity</label>
+                  </Container>
+                  <Col xs={2}>
                     <Button
                       bsPrefix="home-button-plusmin"
-                      onClick={() => setQty(qty > 0 ? qty - 1 : 0)}
+                      onClick={() => handleDec()}
                     >
                       -
                     </Button>
                   </Col>
-                  <Col xs={3}>
+                  <Col xs={2}>
                     <Container fluid className="home-qty">
                       <label>{qty}</label>
                     </Container>
                   </Col>
-                  <Col xs={3}>
+                  <Col xs={2}>
                     <Button
                       bsPrefix="home-button-plusmin"
-                      onClick={() => setQty(qty + 1)}
+                      onClick={() => handleInc()}
                     >
                       +
                     </Button>
+                  </Col>
+                  <Col xs={6}>
+                    {/* <Container fluid className="home-qtyx">
+                      <label>Total Price : {total}</label>
+                    </Container> */}
                   </Col>
                 </Row>
               </Container>
             </Col>
             <Col lg={5}>
               <Container>
-                <Button bsPrefix="home-add-ticket">ADD TICKET</Button>
+                <br />
+                <br />
+                <Button
+                  bsPrefix="home-add-ticket"
+                  onClick={() => handleOrder(id, qty)}
+                >
+                  BOOK NOW!
+                </Button>
               </Container>
             </Col>
           </Row>
         </Modal.Body>
       </Modal>
+      <Link to="/mytickets">
+        <Modal
+          className="fontx"
+          show={showModalx}
+          onHide={() => setModalx(false)}
+        >
+          Ampas
+        </Modal>
+      </Link>
     </>
-  );
+  ) : null;
 };
 
 const mapStateToProps = state => {
@@ -166,7 +213,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTicket: () => dispatch(getTicket())
+    orderTicket: order => dispatch(orderTicket(order))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ModalBuy);

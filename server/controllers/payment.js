@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const models = require("../models");
 const Ticket = models.tickets;
-const MyTickets = models.user_tickets;
 const User = models.users;
 const Payment = models.payment;
 const TrainType = models.trainclass;
@@ -9,8 +8,9 @@ const sequelize = require("sequelize");
 
 exports.order = async (req, res) => {
   try {
-    const { ticket_id, qty, attachment } = req.body;
+    const { qty, ticket_id } = req.body;
     const tiket = await Ticket.findOne({ where: { id: ticket_id } });
+    console.log(ticket_id, qty, "sadas dsa dsa dsad a aasd sa dad");
 
     const total_price = qty * tiket.price;
 
@@ -22,9 +22,9 @@ exports.order = async (req, res) => {
       user_id: user.user_id,
       qty,
       total_price,
-      status: "Waiting Payment",
-      attachment
+      status: "Waiting Payment"
     });
+
     const detailPayment = await Payment.findOne({
       where: { id: payment.id },
       include: [

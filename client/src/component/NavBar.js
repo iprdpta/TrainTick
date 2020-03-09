@@ -8,20 +8,28 @@ import { connect } from "react-redux";
 import UserNav from "../component/UserNav";
 import AdminNav from "../component/AdminNav";
 import traintick from "../assets/traintick.png";
+import { Link, Redirect } from "react-router-dom";
 
 const NavBar = props => {
   useEffect(() => {
     props.getUser();
   }, []);
 
-  const { loading, error, logedIn } = props.user;
+  const { loading, error, logedIn, user } = props.user;
   return (
     <>
       <Container bsPrefix="header">
         <Container fluid className="logo-container">
-          <Image className="logo" src={traintick} />
+          <Link to="/">
+            <Image className="logo" src={traintick} />
+          </Link>
         </Container>
-        {logedIn ? (
+        {user.level === "Admin" ? (
+          <>
+            <AdminNav />
+            <Redirect to="/admin" />
+          </>
+        ) : logedIn ? (
           <UserNav />
         ) : (
           <>

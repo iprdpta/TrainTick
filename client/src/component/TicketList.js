@@ -23,6 +23,7 @@ const TicketList = props => {
     let minutes = parseInt(duration.asMinutes()) - hours * 60;
     return `${hours} H ${minutes} M`;
   };
+  if (loading) return <h1>Loading...</h1>;
 
   return (
     <>
