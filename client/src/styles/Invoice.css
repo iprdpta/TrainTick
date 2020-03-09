@@ -25,11 +25,11 @@
   height: 90px;
 }
 .invoice-text-train {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
 }
 .invoice-text-date {
-  font-size: 20px;
+  font-size: 17px;
   opacity: 0.8;
 }
 .invoice-text-train-name {
@@ -53,7 +53,9 @@
   padding: 10px;
 }
 .invoice-qrcode-body {
-  background-color: rgb(241, 241, 241);
+  background-color: WHITE;
+  border: solid 1px;
+  border-color:  rgb(224, 224, 224);
   padding: 10px;
 }
 .invoice-costumer {
@@ -93,8 +95,8 @@
   height: 100px;
   filter: invert();
 }
-.invoice-choose-file{
-  margin-top: 20pxx;
+.invoice-choose-file {
+  margin-top: 20px;
   margin-bottom: 50px;
 }
 .invoice-pricing-row {
@@ -115,4 +117,20 @@
   width: 100px;
   height: 55px;
   margin-left: -20px;
+}
+.ticket-iconx{
+  margin-top: 22px;
+  width: 15px;
+  height: 85px;
+}
+.invoice-button-pay{
+  width: 100%;
+  border: solid transparent;
+  background-color: #3066be;
+  color: white;
+  font-size: 18px;
+}
+
+.invoice-button-pay:hover {
+  background-color: #58a0d0;
 }

@@ -13,7 +13,6 @@ const ModalLogin = props => {
   }, []);
 
   const loginSubmit = e => {
-    e.preventDefault();
     console.log(username, password, "asdsadasdasdasd aaa aaaa a aa");
     const login = { username, password };
     props.postLogin(login);
@@ -55,7 +54,8 @@ const ModalLogin = props => {
                 onChange={e => setPassword(e.target.value)}
               />
             </Form.Group>
-            <Button bsPrefix="modalButton" type="submit" onClick={loginSubmit}>
+            <Button bsPrefix="modalButton" type="submit" onClick={() => loginSubmit()}>
+              
               LOGIN
             </Button>
           </Form>

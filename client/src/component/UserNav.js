@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Container, Image, Nav, NavDropdown } from "react-bootstrap";
 import { getUser } from "../_actions/user";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import userx from "../assets/user.svg";
 
 const UserNav = props => {
@@ -21,7 +21,9 @@ const UserNav = props => {
   }
   return (
     <>
-      <label>{user.name}</label>
+      <Container className="user-name">
+        <label >{user.name}</label>
+      </Container>
       <Nav className="mr-auto">
         <NavDropdown title={<Image className="thumbnail-image" src={userx} />}>
           <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -31,7 +33,7 @@ const UserNav = props => {
           <NavDropdown.Item>Payment</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={() => handleLogout()}>
-            Log Out
+            <Link to="/">Log Out</Link>
           </NavDropdown.Item>
         </NavDropdown>
       </Nav>

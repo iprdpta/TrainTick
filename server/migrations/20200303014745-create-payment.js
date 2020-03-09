@@ -17,20 +17,16 @@ module.exports = {
       qty: {
         type: Sequelize.INTEGER
       },
-      qty_baby: {
-        type: Sequelize.INTEGER
-      },
-      adult_price: {
-        type: Sequelize.INTEGER
-      },
-      baby_price: {
-        type: Sequelize.INTEGER
-      },
       total_price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       status: {
-        type: Sequelize.ENUM("Pending", "Approved", "Declined")
+        type: Sequelize.ENUM(
+          "Waiting Payment",
+          "Pending",
+          "Approved",
+          "Declined"
+        )
       },
       attachment: {
         type: Sequelize.STRING

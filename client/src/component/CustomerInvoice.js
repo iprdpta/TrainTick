@@ -40,13 +40,13 @@ const CostumerInvoice = ({ getOrderDetail, order }) => {
             <label></label>
           </Col>
           <Col lg={3}>
-            <label>{order.order.user && order.order.user.name}</label>
+            <label>{order.order?.user && order.order.user.name}</label>
           </Col>
           <Col lg={3}>
-            <label>{order.order.user && order.order.user.phone}</label>
+            <label>{order.order?.user && order.order.user.phone}</label>
           </Col>
           <Col lg={3}>
-            <label>{order.order.user && order.order.user.email}</label>
+            <label>{order.order?.user && order.order.user.email}</label>
           </Col>
         </Row>
       </Container>

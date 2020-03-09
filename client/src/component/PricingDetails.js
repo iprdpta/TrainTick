@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Container, Image, Row, Col, Button, Card } from "react-bootstrap";
+import {
+  Container,
+  Image,
+  Row,
+  Col,
+  Button,
+  Card,
+  Modal
+} from "react-bootstrap";
 import { connect } from "react-redux";
 import camera from "../assets/camera.svg";
 import "../styles/Invoice.css";
 import { getOrderDetail } from "../_actions/order";
 import { useParams } from "react-router-dom";
-import ProofTransfer from "../component/ProofTransfer";
+import { Link } from "react-router-dom";
 import { uploadProof } from "../_actions/order";
 
 const PricingDetails = ({ getOrderDetail, uploadProof, order }) => {
+  const [show, setShow] = useState(false);
+  const [showx, setShowx] = useState(false);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -18,12 +28,22 @@ const PricingDetails = ({ getOrderDetail, uploadProof, order }) => {
     uploadProof();
   }, []);
 
-  const handlePay = file => {
-    const formData = new FormData();
-    formData.append("payment", file);
-    uploadProof(formData, id);
+  const handlePay = (file, e) => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("payment", file);
+      uploadProof(formData, id);
+      setShow(true);
+    } else {
+      setShowx(true);
+    }
   };
 
+  const attach = `../images/payment-1583730105262.jpg`;
+
+  if (order.loading) {
+    return <label>Loading... </label>;
+  }
   return (
     <>
       <Row>
@@ -46,8 +66,9 @@ const PricingDetails = ({ getOrderDetail, uploadProof, order }) => {
             <Row>
               <Col lg={5}>
                 <label>
-                  {order.order.ticket && order.order.ticket.train_name} ( Adult
-                  )
+                  {order.order?.ticket && order.order?.ticket?.train_name}
+                  <br />
+                  {order.order?.ticket && order.order.ticket.traintype.name}
                 </label>
               </Col>
               <Col lg={2}>
@@ -55,22 +76,7 @@ const PricingDetails = ({ getOrderDetail, uploadProof, order }) => {
               </Col>
               <Col lg={5}>
                 <label>
-                  Rp{order.order.ticket && order.order.adult_price},-
-                </label>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={5}>
-                <label>
-                  {order.order.ticket && order.order.ticket.train_name} ( Baby )
-                </label>
-              </Col>
-              <Col lg={2}>
-                <label>{order.order && order.order.qty_baby}</label>
-              </Col>
-              <Col lg={5}>
-                <label>
-                  Rp{order.order.ticket && order.order.baby_price},-
+                  Rp{order.order?.ticket && order.order.ticket.price},-
                 </label>
               </Col>
             </Row>
@@ -80,15 +86,18 @@ const PricingDetails = ({ getOrderDetail, uploadProof, order }) => {
               </Col>
               <Col lg={4}>
                 <label className="invoice-pricing-total-text">
-                  Rp{order.order && order.order.total_price},-
+                  <Image
+                    src={`../images/${order.order.attachment}`}
+                  ></Image>
+                  Rp{order.order && order.order.attachment},-
                 </label>
               </Col>
             </Row>
           </Container>
           <br />
-          <Container fluid>
-            <Button onClick={() => handlePay(file)}>Pay Now</Button>
-          </Container>
+          <Button bsPrefix="invoice-button-pay" onClick={() => handlePay(file)}>
+            Pay Now
+          </Button>
         </Col>
         <Col lg={4}>
           <Container>
@@ -126,6 +135,24 @@ const PricingDetails = ({ getOrderDetail, uploadProof, order }) => {
           </Container>
         </Col>
       </Row>
+      <Link to="/mytickets">
+        <Modal
+          className="fontx"
+          size="sm"
+          show={show}
+          onHide={() => setShow(false)}
+        >
+          <Container bsPrefix="modalBody">
+            <label>Payment Success !!!</label>
+          </Container>
+        </Modal>
+      </Link>
+
+      <Modal className="fontx" show={showx} onHide={() => setShowx(false)}>
+        <Container bsPrefix="modalBody">
+          <label>Please Upload Your Proof of Transfer</label>
+        </Container>
+      </Modal>
     </>
   );
 };

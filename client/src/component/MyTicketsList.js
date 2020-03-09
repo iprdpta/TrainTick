@@ -52,9 +52,26 @@ const MyTicketsList = props => {
                           <label className="ticket-list-trainType">
                             {item.ticket && item.ticket.traintype.name}
                           </label>
-                          <Container bsPrefix="ticket-list-pending">
-                            <label>{item.status}</label>
-                          </Container>
+                          {item.status === "Waiting Payment" ? (
+                            <Container bsPrefix="ticket-list-waiting">
+                              <label>{item.status}</label>
+                            </Container>
+                          ) : null}
+                          {item.status === "Pending" ? (
+                            <Container bsPrefix="ticket-list-pending">
+                              <label>{item.status}</label>
+                            </Container>
+                          ) : null}
+                          {item.status === "Approved" ? (
+                            <Container bsPrefix="ticket-list-approved">
+                              <label>{item.status}</label>
+                            </Container>
+                          ) : null}
+                          {item.status === "Declined" ? (
+                            <Container bsPrefix="ticket-list-declined">
+                              <label>{item.status}</label>
+                            </Container>
+                          ) : null}
                         </Col>
 
                         <Col lg={1}>
@@ -122,7 +139,7 @@ const MyTicketsList = props => {
                   </Row>
                   <Row noGutters className="ticket-customer-datax">
                     <Col lg={2}>
-                      <label>{item.user && item.user.id}</label>
+                      <label>{item.user && item.user.id_card}</label>
                     </Col>
                     <Col lg={3}>
                       <label>{item.user && item.user.name}</label>
@@ -134,11 +151,13 @@ const MyTicketsList = props => {
                       <label>{item.user && item.user.email}</label>
                     </Col>
                     <Col lg={2}>
-                      <Link to={`invoice/${item.id}`}>
-                        <Button bsPrefix="ticket-payment-button">
-                          Pay Now
-                        </Button>
-                      </Link>
+                      {item.status === "Waiting Payment" ? (
+                        <Link to={`invoice/${item.id}`}>
+                          <Button bsPrefix="ticket-payment-button">
+                            Pay Now
+                          </Button>
+                        </Link>
+                      ) : null}
                     </Col>
                   </Row>
                 </Container>

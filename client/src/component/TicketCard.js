@@ -24,7 +24,7 @@ const TicketCard = props => {
       <Container className="ticketCard shadow">
         <Row>
           <Col lg={3} className="ticket-tabs">
-            <Container fluid className="ticket-tab ticket-text">
+            <Container className="ticket-tab ticket-text">
               <label>Train Ticket</label>
             </Container>
           </Col>

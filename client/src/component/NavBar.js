@@ -27,7 +27,6 @@ const NavBar = props => {
           <>
             <ModalRegister />
             <ModalLogin />
-            <AdminNav />
           </>
         )}
       </Container>

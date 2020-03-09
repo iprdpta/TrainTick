@@ -26,6 +26,9 @@ function App() {
           <Route path="/mytickets">
             <MyTickets />
           </Route>
+          <Route path="/ticket/:id">
+            <Home />
+          </Route>
           <Route path="/">
             <Home />
           </Route>

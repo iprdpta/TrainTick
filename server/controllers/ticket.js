@@ -19,6 +19,21 @@ exports.ticketList = async (req, res) => {
   }
 };
 
+exports.detailTicket = async (req, res) => {
+  const id_data = req.params.id
+  try {
+    const ticket = await Ticket.findOne({
+      where: { id: id_data },
+      include: [
+        { model: TrainType, as: "traintype", attributes: ["id", "name"] }
+      ]
+    });
+    res.status(200).json({ data: ticket });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.todayTickets = async (req, res) => {
   const today = new Date();
   try {

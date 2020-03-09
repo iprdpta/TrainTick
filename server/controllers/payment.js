@@ -9,13 +9,10 @@ const sequelize = require("sequelize");
 
 exports.order = async (req, res) => {
   try {
-    const { ticket_id, qty, qty_baby, attachment } = req.body;
+    const { ticket_id, qty, attachment } = req.body;
     const tiket = await Ticket.findOne({ where: { id: ticket_id } });
 
-    const adult_price = qty * tiket.price;
-    const baby_price = qty_baby * tiket.price_baby;
-
-    const total_price = adult_price + baby_price;
+    const total_price = qty * tiket.price;
 
     const token = req.header("Authorization").replace("Bearer ", "");
     const user = jwt.verify(token, process.env.SECRET_KEY);
@@ -24,11 +21,8 @@ exports.order = async (req, res) => {
       ticket_id,
       user_id: user.user_id,
       qty,
-      qty_baby,
-      adult_price,
-      baby_price,
       total_price,
-      status: "Pending",
+      status: "Waiting Payment",
       attachment
     });
     const detailPayment = await Payment.findOne({
@@ -49,7 +43,6 @@ exports.order = async (req, res) => {
             "arrival_time",
             "date_time",
             "price",
-            "price_baby",
             "qty"
           ],
           include: [
@@ -60,6 +53,7 @@ exports.order = async (req, res) => {
           model: User,
           as: "user",
           attributes: [
+            "id_card",
             "name",
             "username",
             "email",
@@ -118,7 +112,6 @@ exports.orderUpdate = async (req, res) => {
             "arrival_time",
             "date_time",
             "price",
-            "price_baby",
             "qty"
           ],
           include: [
@@ -129,6 +122,7 @@ exports.orderUpdate = async (req, res) => {
           model: User,
           as: "user",
           attributes: [
+            "id_card",
             "name",
             "username",
             "email",
@@ -169,7 +163,6 @@ exports.getOrderDetail = async (req, res) => {
             "arrival_time",
             "date_time",
             "price",
-            "price_baby",
             "qty"
           ],
           include: [
@@ -180,6 +173,7 @@ exports.getOrderDetail = async (req, res) => {
           model: User,
           as: "user",
           attributes: [
+            "id_card",
             "name",
             "username",
             "email",
@@ -219,7 +213,6 @@ exports.getOrder = async (req, res) => {
             "arrival_time",
             "date_time",
             "price",
-            "price_baby",
             "qty"
           ],
           include: [
@@ -230,6 +223,7 @@ exports.getOrder = async (req, res) => {
           model: User,
           as: "user",
           attributes: [
+            "id_card",
             "name",
             "username",
             "email",
@@ -256,7 +250,7 @@ exports.getOrder = async (req, res) => {
 exports.paymentProof = async (req, res) => {
   try {
     const { filename } = req.file;
-    const { id } = req.params;    
+    const { id } = req.params;
     if (!filename) {
       res.status(400).json({
         status: "failed",
@@ -266,6 +260,7 @@ exports.paymentProof = async (req, res) => {
     } else {
       await Payment.update(
         {
+          status: "Pending",
           attachment: filename
         },
         { where: { id } }

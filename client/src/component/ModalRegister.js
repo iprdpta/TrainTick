@@ -7,6 +7,7 @@ const ModalLogin = props => {
   const [showModal, setModal] = useState(false);
 
   const [name, setName] = useState(null);
+  const [id_card, setIdcard] = useState(null);
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -19,8 +20,8 @@ const ModalLogin = props => {
   }, []);
 
   const registerSubmit = e => {
-    e.preventDefault();
     const register = {
+      id_card,
       name,
       username,
       email,
@@ -48,6 +49,14 @@ const ModalLogin = props => {
               <Form.Control
                 bsPrefix="forms"
                 onChange={e => setName(e.target.value)}
+                name="name"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>ID Card</Form.Label>
+              <Form.Control
+                bsPrefix="forms"
+                onChange={e => setIdcard(e.target.value)}
                 name="name"
               />
             </Form.Group>
@@ -110,7 +119,7 @@ const ModalLogin = props => {
             <Button
               bsPrefix="modalButton"
               type="submit"
-              onClick={registerSubmit}
+              onClick={() => registerSubmit()}
             >
               Register
             </Button>

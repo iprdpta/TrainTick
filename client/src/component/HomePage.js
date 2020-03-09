@@ -9,11 +9,13 @@ class HomePage extends React.Component {
         <Container fluid className="title">
           <Row>
             <Col lg={7}>
-              <div className="tittle">
-                <h1>Welcome, Ticket Seekers !</h1>
-                <p>Want to Travel at Good Deal ?</p>
-                <p>Login or Register Now !</p>
-              </div>
+              <Container>
+                <div className="tittle">
+                  <h1>Welcome, Ticket Seekers !</h1>
+                  <p>Want to Travel at Good Deal ?</p>
+                  <p>Login or Register Now !</p>
+                </div>
+              </Container>
             </Col>
             <Col lg={4}>
               <Banner />

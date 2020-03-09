@@ -15,7 +15,8 @@ const {
 const {
   ticketList,
   todayTickets,
-  tomorrowTickets
+  tomorrowTickets,
+  detailTicket
 } = require("../controllers/ticket");
 
 router.get("/", (req, res) => {
@@ -28,6 +29,7 @@ router.post("/register", register);
 router.get("/user", auth, getUser);
 
 router.get("/ticket", ticketList);
+router.get("/ticket/:id", detailTicket);
 router.get("/todaytickets", todayTickets);
 router.get("/tickets", auth, tomorrowTickets);
 

@@ -14,8 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       arrival_date: DataTypes.DATEONLY,
       arrival_time: DataTypes.TIME,
       date_time: DataTypes.DATE,
-      price: DataTypes.INTEGER,
-      price_baby: DataTypes.INTEGER,
+      price: DataTypes.STRING,
       qty: DataTypes.INTEGER
     },
     {}

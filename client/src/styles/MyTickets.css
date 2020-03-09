@@ -2,20 +2,20 @@
   margin-top: 50px;
   font-family: "Josefin Sans", sans-serif;
 }
-.my-tickets-text{
+.my-tickets-text {
   font-size: 50px;
   text-align: left;
-  
 }
 .ticketLists {
+  margin-top: 25px;
+  margin-bottom: 25px;
   background-color: white;
   border: solid 1px;
   border-radius: 5px;
   border-color: #3066be;
   padding: 10px;
 }
-.ticket-list-logo-container{
-  
+.ticket-list-logo-container {
   align-items: left;
   text-align: left;
 }
@@ -38,10 +38,35 @@
 }
 .ticket-list-pending {
   font-size: 15px;
-  background-color: rgb(255, 179, 116);
+  background-color: rgb(183, 184, 255);
+  color: rgb(0, 4, 255);
+  width: 70px;
+  height: 20px;
+  text-align: center;
+}
+.ticket-list-waiting {
+  font-size: 15px;
+  background-color: rgb(255, 235, 144);
+  color: rgb(253, 152, 0);
+  width: 120px;
+  height: 20px;
+  text-align: center;
+}
+.ticket-list-approved {
+  font-size: 15px;
+  background-color: rgb(172, 255, 139);
+  color: rgb(27, 233, 0);
+  width: 70px;
+  height: 20px;
+  text-align: center;
+}
+.ticket-list-declined {
+  font-size: 15px;
+  background-color: rgb(255, 144, 144);
   color: rgb(255, 0, 0);
   width: 70px;
   height: 20px;
+  text-align: center;
 }
 .ticket-list-train {
   font-size: 30px;
@@ -82,11 +107,11 @@
 .ticket-payment-button:hover {
   background-color: #58a0d0;
 }
-.ticket-customer-data{
+.ticket-customer-data {
   padding: 5px;
   text-align: left;
 }
-.ticket-customer-datax{
+.ticket-customer-datax {
   padding: 10px;
   border-top: solid 1px;
   text-align: left;

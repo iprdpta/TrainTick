@@ -8,6 +8,7 @@ export const USER_LOGIN = "USER_LOGIN";
 export const GET_USER = "GET_USER";
 
 export const TICKET_LIST = "TICKET_LIST";
+export const DETAIL_TICKET = "DETAIL_TICKET";
 export const MYTICKET_LIST = "MYTICKET_LIST";
 
 export const ORDER_DETAIL = "ORDER_DETAIL";

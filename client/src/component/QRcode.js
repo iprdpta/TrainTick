@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import qrcodes from "../assets/frame.png";
 import { getOrderDetail } from "../_actions/order";
 import { useParams } from "react-router-dom";
+import arrow from "../assets/oo.jpg";
 import "../styles/Invoice.css";
 
 const QRcode = ({ getOrderDetail, order }) => {
@@ -11,6 +12,21 @@ const QRcode = ({ getOrderDetail, order }) => {
   useEffect(() => {
     getOrderDetail(id);
   }, []);
+
+  const dayName = item => {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+    const day = new Date(item);
+    return days[day.getDay()];
+  };
+
   if (order.loading) {
     return <label>Loading... </label>;
   }
@@ -23,7 +39,9 @@ const QRcode = ({ getOrderDetail, order }) => {
               <label className="invoice-text-train">Train</label>
             </Container>
             <Container>
-              <strong className="invoice-text-date">Saturday</strong>
+              <strong className="invoice-text-date">
+                {dayName(order.order?.ticket && order.order.ticket.start_date)}
+              </strong>
               <label className="invoice-text-date">, 29 Februari 2020</label>
             </Container>
           </Col>
@@ -38,24 +56,42 @@ const QRcode = ({ getOrderDetail, order }) => {
             <label className="invoice-text-train-type">Eksekutif (H)</label>
           </Container>
           <Row>
-            <Col lg={2}></Col>
-            <Col lg={5}>
-              <label className="invoice-text-bold">{order.order.ticket && order.order.ticket.start_time}</label>
-              <br />
-              <label className="invoice-text-x">{order.order.ticket && order.order.ticket.start_date}</label>
-              <br />
-              <label className="invoice-text-bold">{order.order.ticket && order.order.ticket.arrival_time}</label>
-              <br />
-              <label className="invoice-text-x">{order.order.ticket && order.order.ticket.arrival_date}</label>
+            <Col lg={1}>
+              <Image className="ticket-iconx" src={arrow} />
             </Col>
-            <Col lg={5}>
-              <label className="invoice-text-bold">{order.order.ticket && order.order.ticket.depart}</label>
+            <Col lg={4}>
+              <label className="invoice-text-bold">
+                {order.order?.ticket && order.order.ticket.start_time}
+              </label>
               <br />
-              <label className="invoice-text-x">{order.order.ticket && order.order.ticket.depart_station}</label>
+              <label className="invoice-text-x">
+                {order.order?.ticket && order.order.ticket.start_date}
+              </label>
               <br />
-              <label className="invoice-text-bold">{order.order.ticket && order.order.ticket.destination}</label>
+              <label className="invoice-text-bold">
+                {order.order?.ticket && order.order.ticket.arrival_time}
+              </label>
               <br />
-              <label className="invoice-text-x">{order.order.ticket && order.order.ticket.destination_station}</label>
+              <label className="invoice-text-x">
+                {order.order?.ticket && order.order.ticket.arrival_date}
+              </label>
+            </Col>
+            <Col lg={7}>
+              <label className="invoice-text-bold">
+                {order.order?.ticket && order.order.ticket.depart}
+              </label>
+              <br />
+              <label className="invoice-text-x">
+                {order.order?.ticket && order.order.ticket.depart_station}
+              </label>
+              <br />
+              <label className="invoice-text-bold">
+                {order.order?.ticket && order.order.ticket.destination}
+              </label>
+              <br />
+              <label className="invoice-text-x">
+                {order.order?.ticket && order.order.ticket.destination_station}
+              </label>
             </Col>
           </Row>
         </Container>

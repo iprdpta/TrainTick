@@ -35,11 +35,6 @@ const InvoiceModal = props => {
           <Container>
             <label className="invoice-text">Invoice</label>
           </Container>
-          <QRcode />
-          <br />
-          <PricingDetails />
-          <br />
-          <CostumerInvoice />
         </Container>
       </Modal>
     </>

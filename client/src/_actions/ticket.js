@@ -1,11 +1,22 @@
 import { API, setHeaderAuth } from "../config/api";
-import { TICKET_LIST, MYTICKET_LIST } from "../config/constants";
+import { TICKET_LIST, MYTICKET_LIST, DETAIL_TICKET } from "../config/constants";
 
 export const getTicket = () => {
   return {
     type: TICKET_LIST,
     payload: async () => {
       const res = await API.get("/ticket");
+      const { data } = res.data;
+      return data;
+    }
+  };
+};
+
+export const getTicketDetail = id => {
+  return {
+    type: DETAIL_TICKET,
+    payload: async () => {
+      const res = await API.get(`/ticket${id}`);
       const { data } = res.data;
       return data;
     }

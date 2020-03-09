@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Image,
-  Form,
-  Button,
-  Row,
-  Col,
-  Modal
-} from "react-bootstrap";
-import ModalLogin from "../component/ModalLogin";
-import ModalRegister from "../component/ModalRegister";
+import { Container, Image, Row, Col } from "react-bootstrap";
 import { getTicket } from "../_actions/ticket";
-import { Label } from "react-bootstrap";
 import { connect } from "react-redux";
 import next from "../assets/next.svg";
+import ModalBuy from "../component/ModalBuy";
+import moment from "moment";
 
 const TicketList = props => {
   const [showModal, setModal] = useState(false);
@@ -23,7 +14,16 @@ const TicketList = props => {
   }, []);
 
   const { ticket, error, loading } = props.ticket;
-  
+
+  const getDuration = (timeA, timeB) => {
+    let startTime = moment(timeA, "HH:mm:ss");
+    let endTime = moment(timeB, "HH:mm:ss");
+    let duration = moment.duration(endTime.diff(startTime));
+    let hours = parseInt(duration.asHours());
+    let minutes = parseInt(duration.asMinutes()) - hours * 60;
+    return `${hours} H ${minutes} M`;
+  };
+
   return (
     <>
       <Container className="ticketList">
@@ -48,11 +48,13 @@ const TicketList = props => {
           </Col>
         </Row>
         {ticket.map((item, index) => (
-          <Row key={index} onClick={() => setModal(true)} className="ticketListx">
+          <Row key={index} className="ticketListx">
             <Col lg={2}>
               <label className="ticket-text">{item.train_name}</label>
               <br />
-              <label className="ticket-text2">{item.traintype && item.traintype.name}</label>
+              <label className="ticket-text2">
+                {item.traintype && item.traintype.name}
+              </label>
             </Col>
             <Col lg={2}>
               <label className="ticket-text">{item.start_time}</label>
@@ -69,26 +71,21 @@ const TicketList = props => {
               <label className="ticket-text2">{item.destination}</label>
             </Col>
             <Col lg={2}>
-              <label className="ticket-text">5j 05m</label>
+              <label className="ticket-text">
+                {getDuration(item.start_time, item.arrival_time)}
+              </label>
             </Col>
-            <Col lg={3}>
-              <label className="ticket-text">Adult : Rp{item.price}</label><br/>
-              <label className="ticket-text">Baby : Rp{item.price_baby}</label>
+            <Col lg={2}>
+              <label className="ticket-text">Rp{item.price}</label>
+            </Col>
+            <Col lg={1}>
+              <Container fluid bsPrefix="button-market-container">
+                <ModalBuy data={item} />
+              </Container>
             </Col>
           </Row>
         ))}
       </Container>
-
-      <Modal
-        className="fontx"
-        size="sm"
-        show={showModal}
-        onHide={() => setModal(false)}
-      >
-        <Container bsPrefix="modalBody">
-          <label>Add to My Tickets ?</label>
-        </Container>
-      </Modal>
     </>
   );
 };

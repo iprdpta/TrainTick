@@ -18,7 +18,6 @@ module.exports = {
           arrival_time: new Date(),
           date_time: new Date(),
           price: 300000,
-          price_baby: 100000,
           qty: 100,
           createdAt :new Date(),
           updatedAt: new Date()
@@ -36,7 +35,6 @@ module.exports = {
           arrival_time: new Date(),
           date_time: new Date(),
           price: 250000,
-          price_baby: 100000,
           qty: 100,
           createdAt :new Date(),
           updatedAt: new Date()
@@ -54,7 +52,6 @@ module.exports = {
           arrival_time: new Date(),
           date_time: new Date(),
           price: 200000,
-          price_baby: 50000,
           qty: 100,
           createdAt :new Date(),
           updatedAt: new Date()

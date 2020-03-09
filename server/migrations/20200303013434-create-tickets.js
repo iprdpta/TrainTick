@@ -59,10 +59,7 @@ module.exports = {
         }
       },
       price: {
-        type: Sequelize.INTEGER
-      },
-      price_baby: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       qty: {
         type: Sequelize.INTEGER

@@ -6,11 +6,13 @@ module.exports = (sequelize, DataTypes) => {
       ticket_id: DataTypes.INTEGER,
       user_id: DataTypes.INTEGER,
       qty: DataTypes.INTEGER,
-      qty_baby: DataTypes.INTEGER,
-      adult_price: DataTypes.INTEGER,
-      baby_price: DataTypes.INTEGER,
-      total_price: DataTypes.INTEGER,
-      status: DataTypes.ENUM("Pending", "Approved","Declined"),
+      total_price: DataTypes.STRING,
+      status: DataTypes.ENUM(
+        "Waiting Payment",
+        "Pending",
+        "Approved",
+        "Declined"
+      ),
       attachment: DataTypes.STRING
     },
     {}
