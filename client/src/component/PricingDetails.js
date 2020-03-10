@@ -25,7 +25,6 @@ const PricingDetails = ({ getOrderDetail, uploadProof, order }) => {
   const { id } = useParams();
   useEffect(() => {
     getOrderDetail(id);
-    uploadProof();
   }, []);
 
   const handlePay = (file, e) => {

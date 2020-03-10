@@ -42,7 +42,7 @@ const ModalLogin = props => {
     const reg = await props.registerUser(register);
     if (
       !reg.value.message === "Email or Username Already Registered" &&
-      reg.value.message === "fail"
+      !reg.value.message === "fail"
     ) {
       window.location.reload(false);
     }

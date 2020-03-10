@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { connect } from "react-redux";
 import user from "../assets/user.svg";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { postTicket } from "../_actions/ticket";
 
 const Admin = ({ postTicket }) => {
@@ -32,11 +32,11 @@ const Admin = ({ postTicket }) => {
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.reload(false);
+    window.location.reload();
   };
 
-  const handleAdd = async (e) => {
-    e.preventDefault()
+  const handleAdd = async e => {
+    e.preventDefault();
     const addtick = {
       train_name,
       train_type,
@@ -53,7 +53,7 @@ const Admin = ({ postTicket }) => {
       qty
     };
     const x = await postTicket(addtick);
-    if(x){
+    if (x) {
       window.location.reload(false);
     }
   };
@@ -68,7 +68,7 @@ const Admin = ({ postTicket }) => {
           </NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={() => handleLogout()}>
-            <Link to="/">Log Out</Link>
+            <Link to="/">Logout</Link>
           </NavDropdown.Item>
         </NavDropdown>
       </Nav>
@@ -179,7 +179,7 @@ const Admin = ({ postTicket }) => {
             <Button
               bsPrefix="modalButton"
               type="submit"
-              onClick={(e) => handleAdd(e)}
+              onClick={e => handleAdd(e)}
             >
               ADD TICKET
             </Button>

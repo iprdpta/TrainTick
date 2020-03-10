@@ -30,7 +30,9 @@ const NavBar = props => {
             <Redirect to="/admin" />
           </>
         ) : logedIn ? (
-          <UserNav />
+          <>
+            <UserNav />
+          </>
         ) : (
           <>
             <ModalRegister />

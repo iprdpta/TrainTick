@@ -57,7 +57,6 @@ exports.order = async (req, res) => {
   try {
     const { qty, ticket_id } = req.body;
     const tiket = await Ticket.findOne({ where: { id: ticket_id } });
-    console.log(ticket_id, qty, "sadas dsa dsa dsad a aasd sa dad");
 
     const total_price = qty * tiket.price;
 

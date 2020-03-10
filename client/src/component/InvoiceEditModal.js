@@ -25,9 +25,9 @@ const InvoiceEditModal = ({ data, putStatus }) => {
   const handleEdit = async (e, stat, id) => {
     e.preventDefault();
     const status = { stat, id };
-    const s = await putStatus(status);
-    if (s) {
-      window.location.reload(false);
+    const x = await putStatus(status);
+    if (x) {
+      window.location.reload();
     }
   };
 
@@ -166,36 +166,39 @@ const InvoiceEditModal = ({ data, putStatus }) => {
               </Container>
             </Container>
             <Container className="admin-edit-save">
-              <Row>
-                <Col lg={4}></Col>
-                <Col lg={2}>
-                  <label>Status : </label>
-                </Col>
-                <Col lg={4}>
-                  <Form.Group controlId="formGridState">
-                    <Form.Control
-                      onChange={e => setStatus(e.target.value)}
-                      as="select"
-                    >
-                      <option value="Waiting Payment">Waiting Payment</option>
-                      <option value="Pending">Pending</option>
-                      <option value="Approved">Approved</option>
-                      <option value="Declined">Declined</option>
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
+              <Form>
+                <Row>
+                  <Col lg={4}></Col>
+                  <Col lg={2}>
+                    <label>Status : </label>
+                  </Col>
+                  <Col lg={4}>
+                    <Form.Group controlId="formGridState">
+                      <Form.Control
+                        onChange={e => setStatus(e.target.value)}
+                        as="select"
+                      >
+                        <option value="Waiting Payment">Waiting Payment</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Declined">Declined</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
 
-                <Col lg={2}>
-                  <Container>
-                    <Button
-                      bsPrefix="invoice-modal-save-button"
-                      onClick={e => handleEdit(e, stat, id)}
-                    >
-                      SAVE
-                    </Button>
-                  </Container>
-                </Col>
-              </Row>
+                  <Col lg={2}>
+                    <Container>
+                      <Button
+                        type="submit"
+                        bsPrefix="invoice-modal-save-button"
+                        onClick={e => handleEdit(e, stat, id)}
+                      >
+                        SAVE
+                      </Button>
+                    </Container>
+                  </Col>
+                </Row>
+              </Form>
             </Container>
           </Container>
         </Modal.Body>

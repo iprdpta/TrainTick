@@ -8,7 +8,7 @@ import {
 
 const initialState = {
   order: [],
-  loading: false,
+  loading: true,
   error: false
 };
 

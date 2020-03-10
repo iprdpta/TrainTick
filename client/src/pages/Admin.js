@@ -7,6 +7,7 @@ import NavBar from "../component/NavBar";
 import AdminPaymentIndex from "../component/AdminPaymentIndex";
 
 class Admin extends React.Component {
+
   render() {
     return (
       <>
