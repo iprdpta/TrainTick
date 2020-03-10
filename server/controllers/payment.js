@@ -6,6 +6,53 @@ const Payment = models.payment;
 const TrainType = models.trainclass;
 const sequelize = require("sequelize");
 
+exports.paymentIndex = async (req, res) => {
+  try {
+    const payment = await Payment.findAll({
+      include: [
+        {
+          model: Ticket,
+          as: "ticket",
+          attributes: [
+            "train_name",
+            "depart",
+            "depart_station",
+            "start_date",
+            "start_time",
+            "destination",
+            "destination_station",
+            "arrival_date",
+            "arrival_time",
+            "date_time",
+            "price",
+            "qty"
+          ],
+          include: [
+            { model: TrainType, as: "traintype", attributes: ["id", "name"] }
+          ]
+        },
+        {
+          model: User,
+          as: "user",
+          attributes: [
+            "id_card",
+            "name",
+            "username",
+            "email",
+            "gender",
+            "phone",
+            "address",
+            "profile_pic"
+          ]
+        }
+      ]
+    });
+    res.send({ data: payment });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.order = async (req, res) => {
   try {
     const { qty, ticket_id } = req.body;
@@ -14,12 +61,11 @@ exports.order = async (req, res) => {
 
     const total_price = qty * tiket.price;
 
-    const token = req.header("Authorization").replace("Bearer ", "");
-    const user = jwt.verify(token, process.env.SECRET_KEY);
+    const userid = req.user;
 
     const payment = await Payment.create({
       ticket_id,
-      user_id: user.user_id,
+      user_id: userid,
       qty,
       total_price,
       status: "Waiting Payment"
@@ -79,13 +125,12 @@ exports.orderUpdate = async (req, res) => {
     const tiket = await Ticket.findOne({ where: { id: ticket_id } });
     const total_price = qty * tiket.price;
 
-    const token = req.header("Authorization").replace("Bearer ", "");
-    const user = jwt.verify(token, process.env.SECRET_KEY);
+    const userid = req.user;
 
     const payment = await Payment.update(
       {
         ticket_id,
-        user_id: user.user_id,
+        user_id: userid,
         qty,
         total_price,
         status,
@@ -142,8 +187,7 @@ exports.orderUpdate = async (req, res) => {
 
 exports.getOrderDetail = async (req, res) => {
   const id_order = req.params.id;
-  const token = req.header("Authorization").replace("Bearer ", "");
-  const user = jwt.verify(token, process.env.SECRET_KEY);
+  const userid = req.user;
   try {
     const ticket = await Payment.findOne({
       where: { id: id_order },
@@ -192,11 +236,10 @@ exports.getOrderDetail = async (req, res) => {
 };
 
 exports.getOrder = async (req, res) => {
-  const token = req.header("Authorization").replace("Bearer ", "");
-  const user = jwt.verify(token, process.env.SECRET_KEY);
+  const userid = req.user
   try {
     const ticket = await Payment.findAll({
-      where: { user_id: user.user_id },
+      where: { user_id: userid },
       include: [
         {
           model: Ticket,
@@ -273,6 +316,18 @@ exports.paymentProof = async (req, res) => {
         data: filename
       });
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.setStatus = async (req, res) => {
+  const { id } = req.params;
+  const { stat } = req.body;
+  try {
+    const order = await Payment.update({ status: stat }, { where: { id } });
+    const detorder = await Payment.findOne({ where: { id } });
+    res.status(201).send({ data: order });
   } catch (err) {
     console.log(err);
   }

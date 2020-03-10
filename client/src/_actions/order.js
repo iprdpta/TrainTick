@@ -1,5 +1,22 @@
 import { API, setHeaderAuth } from "../config/api";
-import { ORDER_DETAIL, UPLOAD_PROOF, ORDER_TICKET } from "../config/constants";
+import {
+  ORDER_DETAIL,
+  UPLOAD_PROOF,
+  ORDER_TICKET,
+  ORDERS_INDEX,
+  PUT_STATUS
+} from "../config/constants";
+
+export const orderIndex = () => {
+  return {
+    type: ORDERS_INDEX,
+    payload: async () => {
+      const res = await API.get(`/orders`);
+      const { data } = res.data;
+      return data;
+    }
+  };
+};
 
 export const orderTicket = order => {
   return {
@@ -32,6 +49,17 @@ export const uploadProof = (formData, id) => {
           "Content-Type": "multipart/form-data"
         }
       });
+      const { data } = res.data;
+      return data;
+    }
+  };
+};
+
+export const putStatus = status => {
+  return {
+    type: PUT_STATUS,
+    payload: async () => {
+      const res = await API.put(`/order/${status.id}`, status);
       const { data } = res.data;
       return data;
     }

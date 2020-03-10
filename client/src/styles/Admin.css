@@ -51,3 +51,15 @@
   color: white;
   margin-bottom: 20px;
 }
+.admin-attachment{
+  height: 180px;
+}
+.admin-attachmentx{
+  width: 70px;
+  height: 140px;
+  filter: invert();
+  height: 180px;
+}
+.admin-edit-save{
+  margin-top: 50px;
+}

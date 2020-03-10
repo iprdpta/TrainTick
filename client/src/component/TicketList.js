@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Container, Image, Row, Col } from "react-bootstrap";
-import { getTicket } from "../_actions/ticket";
+
 import { connect } from "react-redux";
 import next from "../assets/next.svg";
 import ModalBuy from "../component/ModalBuy";
 import moment from "moment";
 
-const TicketList = props => {
+const TicketList = data => {
   const [showModal, setModal] = useState(false);
-
-  useEffect(() => {
-    props.getTicket();
-  }, []);
-
-  const { ticket, error, loading } = props.ticket;
+  console.log(data, "xc zxcxz  xzczxczxczxc");
+  const { ticket } = data;
 
   const getDuration = (timeA, timeB) => {
     let startTime = moment(timeA, "HH:mm:ss");
@@ -23,7 +19,7 @@ const TicketList = props => {
     let minutes = parseInt(duration.asMinutes()) - hours * 60;
     return `${hours} H ${minutes} M`;
   };
-  if (loading) return <h1>Loading...</h1>;
+  if (data.loading) return <h1>Loading...</h1>;
 
   return (
     <>
@@ -48,7 +44,7 @@ const TicketList = props => {
             <label>Price for One Person</label>
           </Col>
         </Row>
-        {ticket.map((item, index) => (
+        {data.map((item, index) => (
           <Row key={index} className="ticketListx">
             <Col lg={2}>
               <label className="ticket-text">{item.train_name}</label>
@@ -98,8 +94,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    getTicket: () => dispatch(getTicket())
-  };
+  return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TicketList);

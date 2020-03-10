@@ -3,13 +3,11 @@ const models = require("../models");
 const User = models.users;
 const sequelize = require("sequelize");
 
-
 exports.getUser = async (req, res) => {
-  const token = req.header("Authorization").replace("Bearer ", "");
-  const user = jwt.verify(token, process.env.SECRET_KEY);
+  const userid = req.user;
   try {
     const getuser = await User.findOne({
-      where: { id: user.user_id }
+      where: { id: userid }
     });
     res.status(200).json({ data: getuser });
   } catch (err) {

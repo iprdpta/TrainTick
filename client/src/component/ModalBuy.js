@@ -198,7 +198,11 @@ const ModalBuy = ({ data, orderTicket }) => {
           show={showModalx}
           onHide={() => setModalx(false)}
         >
-          Ampas
+          <Modal.Body>
+            <Container fluid className="buy-header-title">
+              <label className="buy-header-title">Success Added To MyTickets</label>
+            </Container>
+          </Modal.Body>
         </Modal>
       </Link>
     </>

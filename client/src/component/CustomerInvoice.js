@@ -37,7 +37,7 @@ const CostumerInvoice = ({ getOrderDetail, order }) => {
         </Row>
         <Row className="invoice-costumer-detailx">
           <Col lg={2}>
-            <label></label>
+            <label>{order.order?.user && order.order.user.id_card}</label>
           </Col>
           <Col lg={3}>
             <label>{order.order?.user && order.order.user.name}</label>

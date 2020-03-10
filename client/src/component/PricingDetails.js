@@ -86,10 +86,7 @@ const PricingDetails = ({ getOrderDetail, uploadProof, order }) => {
               </Col>
               <Col lg={4}>
                 <label className="invoice-pricing-total-text">
-                  <Image
-                    src={`../images/${order.order.attachment}`}
-                  ></Image>
-                  Rp{order.order && order.order.attachment},-
+                  Rp{order.order && order.order.total_price},-
                 </label>
               </Col>
             </Row>

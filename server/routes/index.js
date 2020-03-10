@@ -10,13 +10,16 @@ const {
   order,
   orderUpdate,
   getOrderDetail,
-  paymentProof
+  paymentProof,
+  paymentIndex,
+  setStatus
 } = require("../controllers/payment");
 const {
   ticketList,
   todayTickets,
   tomorrowTickets,
-  detailTicket
+  detailTicket,
+  addTicket
 } = require("../controllers/ticket");
 
 router.get("/", (req, res) => {
@@ -28,15 +31,17 @@ router.post("/register", register);
 
 router.get("/user", auth, getUser);
 
-router.get("/ticket", ticketList);
+router.get("/ticketx", ticketList);
 router.get("/ticket/:id", detailTicket);
 router.get("/todaytickets", todayTickets);
 router.get("/tickets", auth, tomorrowTickets);
+router.post("/ticket", auth, addTicket);
 
+router.get("/orders", auth, paymentIndex);
 router.get("/order", auth, getOrder);
 router.post("/order", auth, order);
 router.get("/order/:id", auth, getOrderDetail);
-router.put("/order/:id", auth, orderUpdate);
+router.put("/order/:id", auth, setStatus);
 router.post("/upload/:id", upload.single("payment"), paymentProof);
 
 module.exports = router;

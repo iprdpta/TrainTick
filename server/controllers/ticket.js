@@ -7,8 +7,13 @@ const TrainType = models.trainclass;
 const sequelize = require("sequelize");
 
 exports.ticketList = async (req, res) => {
+  const { from, to } = req.query;
   try {
     const ticket = await Ticket.findAll({
+      where: {
+        depart: { [sequelize.Op.startsWith]: `${from}` },
+        destination: { [sequelize.Op.startsWith]: `${to}` }
+      },
       include: [
         { model: TrainType, as: "traintype", attributes: ["id", "name"] }
       ]
@@ -19,8 +24,46 @@ exports.ticketList = async (req, res) => {
   }
 };
 
+exports.addTicket = async (req, res) => {
+  const {
+    train_name,
+    train_type,
+    depart,
+    depart_station,
+    start_date,
+    start_time,
+    destination,
+    destination_station,
+    arrival_date,
+    arrival_time,
+    date_time,
+    price,
+    qty
+  } = req.body;
+  try {
+    const ticket = await Ticket.create({
+      train_name,
+      train_type,
+      depart,
+      depart_station,
+      start_date,
+      start_time,
+      destination,
+      destination_station,
+      arrival_date,
+      arrival_time,
+      date_time,
+      price,
+      qty
+    });
+    res.status(200).json({ data: ticket });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.detailTicket = async (req, res) => {
-  const id_data = req.params.id
+  const id_data = req.params.id;
   try {
     const ticket = await Ticket.findOne({
       where: { id: id_data },

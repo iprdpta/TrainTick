@@ -11,26 +11,53 @@ import {
 import { connect } from "react-redux";
 import user from "../assets/user.svg";
 import { Link } from "react-router-dom";
+import { postTicket } from "../_actions/ticket";
 
-const Admin = props => {
+const Admin = ({ postTicket }) => {
   const [showModal, setModal] = useState(false);
 
-  const [nameTrain, setNameTrain] = useState(null);
-  const [trainType, setTrainType] = useState(null);
-  const [dateStart, setDateStart] = useState(null);
-  const [startStation, setStartStation] = useState(null);
-  const [startTime, setStartTime] = useState(null);
-  const [destinationStation, setDestinationStation] = useState(null);
-  const [arrivalTime, setArrivalTime] = useState(null);
-  const [price, setPrice] = useState(null);
-  const [qty, setQty] = useState(null);
+  const [train_name, train_namex] = useState(null);
+  const [train_type, train_typex] = useState(null);
+  const [depart, departx] = useState(null);
+  const [depart_station, depart_stationx] = useState(null);
+  const [start_date, start_datex] = useState(null);
+  const [start_time, start_timex] = useState(null);
+  const [destination, destinationx] = useState(null);
+  const [destination_station, destination_stationx] = useState(null);
+  const [arrival_date, arrival_datex] = useState(null);
+  const [arrival_time, arrival_timex] = useState(null);
+  const [date_time, date_timex] = useState(null);
+  const [price, pricex] = useState(null);
+  const [qty, qtyx] = useState(null);
 
   const handleLogout = () => {
     localStorage.clear();
     window.location.reload(false);
   };
 
-  const { loading, error, logedIn } = props.auth;
+  const handleAdd = async (e) => {
+    e.preventDefault()
+    const addtick = {
+      train_name,
+      train_type,
+      depart,
+      depart_station,
+      start_date,
+      start_time,
+      destination,
+      destination_station,
+      arrival_date,
+      arrival_time,
+      date_time,
+      price,
+      qty
+    };
+    const x = await postTicket(addtick);
+    if(x){
+      window.location.reload(false);
+    }
+  };
+
   return (
     <>
       <label>Admin</label>
@@ -56,7 +83,7 @@ const Admin = props => {
               <Form.Label>Train Name</Form.Label>
               <Form.Control
                 bsPrefix="forms"
-                onChange={e => setNameTrain(e.target.value)}
+                onChange={e => train_namex(e.target.value)}
                 name="name"
               />
             </Form.Group>
@@ -64,62 +91,96 @@ const Admin = props => {
               <Form.Label>Train Type</Form.Label>
               <Form.Control
                 bsPrefix="forms"
-                onChange={e => setTrainType(e.target.value)}
+                onChange={e => train_typex(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Date Start</Form.Label>
+              <Form.Label>Depart</Form.Label>
               <Form.Control
                 bsPrefix="forms"
-                onChange={e => setDateStart(e.target.value)}
-                type="date"
+                onChange={e => departx(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
-              <Form.Label>Start Station</Form.Label>
+              <Form.Label>Depart Station</Form.Label>
               <Form.Control
                 bsPrefix="forms"
-                onChange={e => setStartStation(e.target.value)}
+                onChange={e => depart_stationx(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="formGridState">
+              <Form.Label>Start Date</Form.Label>
+              <Form.Control
+                bsPrefix="forms"
+                onChange={e => start_datex(e.target.value)}
+                type="date"
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
               <Form.Label>Start Time</Form.Label>
               <Form.Control
                 bsPrefix="forms"
-                onChange={e => setStartTime(e.target.value)}
                 type="time"
-              ></Form.Control>
+                onChange={e => start_timex(e.target.value)}
+              />
             </Form.Group>
             <Form.Group>
               <Form.Label>Destination</Form.Label>
               <Form.Control
                 bsPrefix="forms"
-                onChange={e => setDestinationStation(e.target.value)}
+                onChange={e => destinationx(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Destination Station</Form.Label>
+              <Form.Control
+                bsPrefix="forms"
+                onChange={e => destination_stationx(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Arrival Date</Form.Label>
+              <Form.Control
+                bsPrefix="forms"
+                type="date"
+                onChange={e => arrival_datex(e.target.value)}
               />
             </Form.Group>
             <Form.Group>
               <Form.Label>Arrival Time</Form.Label>
               <Form.Control
                 bsPrefix="forms"
-                onChange={e => setArrivalTime(e.target.value)}
                 type="time"
+                onChange={e => arrival_timex(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Date Time</Form.Label>
+              <Form.Control
+                bsPrefix="forms"
+                type="date"
+                onChange={e => date_timex(e.target.value)}
               />
             </Form.Group>
             <Form.Group>
               <Form.Label>Price</Form.Label>
               <Form.Control
                 bsPrefix="forms"
-                onChange={e => setPrice(e.target.value)}
+                onChange={e => pricex(e.target.value)}
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Quantity</Form.Label>
+              <Form.Label>Qty</Form.Label>
               <Form.Control
                 bsPrefix="forms"
-                onChange={e => setQty(e.target.value)}
+                onChange={e => qtyx(e.target.value)}
               />
             </Form.Group>
-            <Button bsPrefix="modalButton" type="submit">
+            <Button
+              bsPrefix="modalButton"
+              type="submit"
+              onClick={(e) => handleAdd(e)}
+            >
               ADD TICKET
             </Button>
           </Form>
@@ -136,6 +197,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return { postTicket: addtick => dispatch(postTicket(addtick)) };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);

@@ -18,7 +18,6 @@ class Home extends React.Component {
         <NavBar />
         <HomePage />
         <TicketCard />
-        <TicketList />
       </>
     );  
   }
