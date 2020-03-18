@@ -105,7 +105,7 @@ Wait till the application is opened into your browser. Now, you can explore Land
 
 ## Author
 
-**Indra Pradipta** - [Indra Pradipta](https://github.com/iprpdta)
+**Indra Pradipta** - [Indra Pradipta](https://github.com/iprdpta)
 
 ## License
 
