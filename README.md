@@ -41,6 +41,41 @@ Then, install all the packages that described in `package.json` of both `client`
 ```
 npm install
 ```
+### Server Setup
+
+For the server setup, first, make sure your MySQL services is running fine. In `server` directory, you'll find `config.json` inside `config` folder. Open and edit the `development` configuration to match your database setup.
+
+```
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "database_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+```
+
+After completing the database configuration setup, migrate all the required tables.
+
+```
+npm run build
+```
+
+We also need to configure some environtment variables for the server, let's create .env file in server's root project, open and edit it, then input the code below.
+
+```
+PORT=4000
+SECRET_KEY=ThisIsTheSecretKey
+```
+
+The `SECRET_KEY` and `PORT` you can custom it as you wish.
+
+And for the last step, running the server
+
+```
+npm start
+```
 
 ### Client Setup
 
@@ -59,10 +94,7 @@ Wait till the application is opened into your browser. Now, you can explore Land
 
 ## Screenshots
 
-![screencapture-localhost-3000-2020-03-09-13_57_31](https://user-images.githubusercontent.com/59110393/76924165-1c14c700-6908-11ea-99cf-44f34fd7be89.png)
-![screencapture-localhost-3000-home-2020-03-09-13_57_07](https://user-images.githubusercontent.com/59110393/76924224-41093a00-6908-11ea-950b-cc4eaf765963.png)
-![Opera Snapshot_2020-03-16_130429_localhost](https://user-images.githubusercontent.com/59110393/76924259-5bdbae80-6908-11ea-83e2-39990fd11cfb.png)
-
+<img src="docs/screenshots/TrainTick_ss.jpg" />
 
 ## Built With
 
