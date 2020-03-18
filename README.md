@@ -33,7 +33,7 @@ Make sure all of these are properly installed in your system.
 First, clone this repository into your system.
 
 ```
-git clone https://github.com/setyawanandik/Landtick_DW14GLU9N.git
+git clone https://github.com/iprdpta/TrainTick.git
 ```
 
 Then, install all the packages that described in `package.json` of both `client` and `server` directories.
